@@ -28,12 +28,14 @@ public class UIButtonScript : MonoBehaviour {
     public void MoveRightButtonPress() {
         messageLog.text = "[Move right button pressed!]";
         StartCoroutine(TurnRoutine(90));
+        StartCoroutine(DisableBtnForTimeRoutine(moveLeftButton, Globals.turnTime));
         StartCoroutine(DisableBtnForTimeRoutine(moveRightButton, Globals.turnTime));
     }
 
     public void MoveLeftButtonPress() {
         messageLog.text = "[Move left button pressed!]";
         StartCoroutine(TurnRoutine(-90));
+        StartCoroutine(DisableBtnForTimeRoutine(moveLeftButton, Globals.turnTime));
         StartCoroutine(DisableBtnForTimeRoutine(moveRightButton, Globals.turnTime));
     }
 
@@ -57,7 +59,6 @@ public class UIButtonScript : MonoBehaviour {
         Vector3 targetAngle = new Vector3(playerAngle.x, playerAngle.y + angle, playerAngle.z);
         while (t <= 1) {
             player.transform.eulerAngles = Vector3.LerpUnclamped(playerAngle, targetAngle, Mathf.SmoothStep(0, 1, t));
-            //player.transform.eulerAngles = Vector3.LerpUnclamped(playerAngle, targetAngle, t);
             t += Time.deltaTime / Globals.turnTime;
             yield return new WaitForEndOfFrame();
         }
